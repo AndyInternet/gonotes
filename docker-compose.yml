@@ -1,4 +1,18 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: app
+    restart: always
+    depends_on:
+      - api
+    env_file:
+      - app/.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/src:/usr/src/app/src
   api:
     build:
       context: .
