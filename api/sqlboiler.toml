@@ -1,0 +1,14 @@
+[psql]
+  dbname  = "{{.Env.DB_NAME}}"
+  host    = "{{.Env.DB_HOST}}"
+  port    = {{.Env.DB_PORT}}
+  user    = "{{.Env.DB_USER}}"
+  pass    = "{{.Env.DB_PASSWORD}}"
+  sslmode = "disable"
+  blacklist = []
+  whitelist = []
+
+# Output configuration
+output   = "models"
+wipe     = true
+no-tests = true

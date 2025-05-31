@@ -1,0 +1,43 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: api
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: gonotes
+      DB_PASSWORD: gonotes
+      DB_NAME: gonotes
+    env_file:
+      - api/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api:/app
+    command: air
+  db:
+    image: postgres:16
+    container_name: postgres16
+    restart: always
+    environment:
+      POSTGRES_USER: gonotes
+      POSTGRES_PASSWORD: gonotes
+      POSTGRES_DB: gonotes
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gonotes"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
