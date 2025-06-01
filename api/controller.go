@@ -28,7 +28,7 @@ func GetNotes(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	notes, err := models.Notes(
-		qm.Select("id", "title", "updated_at"),
+		qm.Select("id", "created_at", "updated_at", "title"),
 		qm.OrderBy("updated_at DESC"),
 	).All(context.Background(), DB)
 
