@@ -24,3 +24,5 @@ migrate -path migrations -database "postgres://gonotes:gonotes@db:5432/gonotes?s
 ```
 
 9. Open a browser and navigate to http://localhost:3000
+
+<img width="1760" alt="image" src="https://github.com/user-attachments/assets/71d77899-3e75-40f0-ab68-161f558126e9" />
