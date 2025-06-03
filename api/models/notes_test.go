@@ -568,7 +568,7 @@ func testNotesSelect(t *testing.T) {
 }
 
 var (
-	noteDBTypes = map[string]string{`ID`: `uuid`, `CreatedAt`: `timestamp with time zone`, `UpdatedAt`: `timestamp with time zone`, `Title`: `character varying`, `Body`: `text`}
+	noteDBTypes = map[string]string{`ID`: `uuid`, `CreatedAt`: `timestamp with time zone`, `UpdatedAt`: `timestamp with time zone`, `Title`: `character varying`, `Body`: `jsonb`}
 	_           = bytes.MinRead
 )
 

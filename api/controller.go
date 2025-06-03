@@ -53,7 +53,7 @@ func CreateNote(w http.ResponseWriter, r *http.Request) {
 	} else {
 		note := &models.Note{
 			Title: validatedData.Title,
-			Body:  null.StringFrom(validatedData.Body),
+			Body:  null.JSONFrom(validatedData.Body),
 		}
 
 		if err := note.Insert(context.Background(), DB, boil.Infer()); err != nil {
@@ -118,8 +118,8 @@ func UpdateNote(w http.ResponseWriter, r *http.Request) {
 	}
 
 	note.Title = validatedData.Title
-	if validatedData.Body != "" {
-		note.Body = null.StringFrom(validatedData.Body)
+	if len(validatedData.Body) > 0 {
+		note.Body = null.JSONFrom(validatedData.Body)
 	}
 
 	_, err = note.Update(context.Background(), DB, boil.Infer())
