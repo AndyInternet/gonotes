@@ -18,6 +18,7 @@ export const NotesDrawer: React.FC = () => {
       sx={{
         width: drawerWidth,
         flexShrink: 0,
+        zIndex: 250,
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
