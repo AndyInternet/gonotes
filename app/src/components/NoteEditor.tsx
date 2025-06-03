@@ -5,6 +5,8 @@ import "@blocknote/mantine/style.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import React, { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useGetNoteByIdQuery, useUpdateNoteMutation } from "../api";
 import { useDebouncedEffect } from "../hooks/useDebouncedEffect";
 
@@ -28,15 +30,22 @@ export const NoteEditor: React.FC<Props> = ({ id }) => {
 
   useDebouncedEffect(
     () => {
-      if (title !== note?.title || body !== note?.body) {
-        updateNote({
-          id: id,
-          note: {
-            title: title ?? defaultTitle,
-            body: body,
-          },
-        });
-      }
+      (async () => {
+        if (title !== note?.title || body !== note?.body) {
+          try {
+            await updateNote({
+              id: id,
+              note: {
+                title: title ?? defaultTitle,
+                body: body,
+              },
+            }).unwrap();
+          } catch (error) {
+            console.error(error);
+            toast.error(JSON.stringify(error), {});
+          }
+        }
+      })();
     },
     [title, body],
     500

@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
+import { ToastContainer } from "react-toastify";
 import { NotePanel } from "./components/NotePanel";
 import { NotesDrawer } from "./components/NotesDrawer";
 
@@ -25,6 +26,7 @@ export default function App() {
         <CssBaseline />
         <NotesDrawer />
         <NotePanel />
+        <ToastContainer />
       </Box>
     </ThemeProvider>
   );
