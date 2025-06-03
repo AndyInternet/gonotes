@@ -1,8 +1,8 @@
-import { Card, Drawer, Typography } from "@mui/material";
+import { Drawer } from "@mui/material";
 import Box from "@mui/material/Box";
-import dayjs from "dayjs";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetNotesQuery } from "../api";
+import { DrawerCard } from "./DrawerCard";
 import { NewNote } from "./NewNote";
 
 const drawerWidth = 240;
@@ -10,7 +10,6 @@ const drawerWidth = 240;
 export const NotesDrawer: React.FC = () => {
   const { id: activeId } = useParams<{ id: string }>();
   const { data: notes, isLoading, error } = useGetNotesQuery();
-  const navigate = useNavigate();
 
   return (
     <Drawer
@@ -31,17 +30,13 @@ export const NotesDrawer: React.FC = () => {
         {error && <div>Error loading notes</div>}
         {notes &&
           notes.map(({ id, title, updated_at }) => (
-            <Card
+            <DrawerCard
               key={id}
-              variant={activeId === id ? "elevation" : "outlined"}
-              sx={{ p: 1, mb: 1, cursor: "pointer" }}
-              onClick={() => navigate(`/note/${id}`)}
-            >
-              <Typography variant="body1">{title}</Typography>
-              <Typography sx={{ fontSize: ".8rem", opacity: 0.5 }}>
-                {dayjs(updated_at).format("DD/MM/YYYY h:MM:ssa")}
-              </Typography>
-            </Card>
+              id={id}
+              title={title}
+              updated_at={updated_at}
+              active={activeId === id}
+            />
           ))}
       </Box>
     </Drawer>
