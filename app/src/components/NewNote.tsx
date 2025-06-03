@@ -12,7 +12,7 @@ export const NewNote: React.FC = () => {
     try {
       const newNote = await createNote({
         title: "Untitled",
-        body: "[]", // Empty BlockNote document
+        body: [{ type: "paragraph" }] as unknown as JSON, // Empty BlockNote document
       }).unwrap();
 
       // Redirect to the new note
