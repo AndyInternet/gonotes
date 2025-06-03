@@ -12,7 +12,7 @@ import (
 )
 
 type NoteDTO struct {
-	Title string          `json:"title" validate:"required,min=1,max=1024"`
+	Title string          `json:"title" validate:"min=0,max=1024"`
 	Body  json.RawMessage `json:"body"`
 }
 
