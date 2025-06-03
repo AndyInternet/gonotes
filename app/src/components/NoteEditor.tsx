@@ -27,8 +27,7 @@ export const NoteEditor: React.FC<Props> = ({ id }) => {
 
   useDebouncedEffect(
     () => {
-      if (!id || !title.trim()) return;
-      try {
+      if (title !== note?.title || body !== note?.body) {
         updateNote({
           id: id,
           note: {
@@ -36,8 +35,6 @@ export const NoteEditor: React.FC<Props> = ({ id }) => {
             body: body,
           },
         });
-      } catch (error) {
-        console.error("Failed to save note:", error);
       }
     },
     [title, body],
@@ -45,15 +42,16 @@ export const NoteEditor: React.FC<Props> = ({ id }) => {
   );
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+    const value = event.target.value;
+    setTitle(value);
   };
 
   const handleEditorChange = (document: Block[]) => {
-    setBody(JSON.parse(JSON.stringify(document)));
+    const value = JSON.parse(JSON.stringify(document));
+    setBody(value);
   };
 
   const editor = useMemo(() => {
-    // Ensure we always have at least one block
     const initialContent =
       note?.body && Array.isArray(note.body) && note.body.length > 0
         ? (note.body as Block[])
@@ -63,7 +61,7 @@ export const NoteEditor: React.FC<Props> = ({ id }) => {
       initialContent: initialContent,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [note?.id]);
 
   if (isLoading) return <div>loading ...</div>;
   if (error) return <div>error</div>;
